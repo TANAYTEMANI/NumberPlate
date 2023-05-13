@@ -17,9 +17,6 @@ checkout_df = pd.read_csv("plates/checkout_data.csv")
 min_area = 500
 with col1:
     st.header("Checkin")
-    url = "http://10.120.104.178:8080/video"
-    cap = cv2.VideoCapture(url)
-    ret, frame = cap.read()
     img_file_buffer = st.camera_input('Input Camera', key = 'check_in_camcam')
     confirm = st.button('Confirm Checkin', use_container_width=True)
     if img_file_buffer is not None and confirm:
@@ -34,7 +31,7 @@ with col1:
                 cv2.putText(img, "Number Plate", (x,y-5), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 0, 255), 2)
                 img_roi = img[y: y+h, x:x+w]
                 st.image(img_roi)
-        cv2.imwrite("plates/scaned_img.jpg", img_roi)
+                cv2.imwrite("plates/scaned_img.jpg", img_roi)
         os.system('~/miniconda3/envs/easyocr/bin/python easy_ocr.py checkin')
             
 with col2:
@@ -70,6 +67,6 @@ option=st.selectbox("Select the vehicle:", checkin_df)
 st.write("The bill amount for vehicle", option, ": ", random.choice(amount))
             
 with col4:
-    st.subheader("Dataset")
+    st.subheader("Checkout Details")
     st.dataframe(checkout_df, use_container_width=True)
 
